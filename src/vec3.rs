@@ -1,0 +1,140 @@
+use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub};
+
+#[derive(Debug, Copy, Clone)]
+pub struct Vec3(f64, f64, f64);
+
+impl Vec3 {
+    pub fn new() -> Self {
+        Self(0.0, 0.0, 0.0)
+    }
+
+    pub fn from(x: f64, y: f64, z: f64) -> Self {
+        Self(x, y, z)
+    }
+
+    pub fn x(&self) -> f64 {
+        self.0
+    }
+    pub fn y(&self) -> f64 {
+        self.1
+    }
+    pub fn z(&self) -> f64 {
+        self.2
+    }
+
+    fn length(&self) -> f64 {
+        self.length_squared().sqrt()
+    }
+
+    fn length_squared(&self) -> f64 {
+        self.0 * self.0 + self.1 * self.1 + self.2 * self.2
+    }
+}
+
+impl Neg for Vec3 {
+    type Output = Self;
+
+    fn neg(self) -> Self::Output {
+        Vec3(-self.0, -self.1, -self.2)
+    }
+}
+
+impl AddAssign for Vec3 {
+    fn add_assign(&mut self, rhs: Self) {
+        *self = Vec3(self.0 + rhs.0, self.1 + rhs.1, self.2 + rhs.2);
+    }
+}
+
+impl MulAssign<f64> for Vec3 {
+    fn mul_assign(&mut self, rhs: f64) {
+        self.0 *= rhs;
+        self.1 *= rhs;
+        self.2 *= rhs;
+    }
+}
+
+impl DivAssign<f64> for Vec3 {
+    fn div_assign(&mut self, rhs: f64) {
+        *self *= 1.0 / rhs;
+    }
+}
+
+impl Add for Vec3 {
+    type Output = Self;
+
+    fn add(self, rhs: Self) -> Self::Output {
+        Self(self.0 + rhs.0, self.1 + rhs.1, self.2 + rhs.2)
+    }
+}
+
+impl Sub for Vec3 {
+    type Output = Self;
+
+    fn sub(self, rhs: Self) -> Self::Output {
+        Self(self.0 - rhs.0, self.1 - rhs.1, self.2 - rhs.2)
+    }
+}
+
+impl Mul for Vec3 {
+    type Output = Self;
+
+    fn mul(self, rhs: Self) -> Self::Output {
+        Self(self.0 * rhs.0, self.1 * rhs.1, self.2 * rhs.2)
+    }
+}
+
+impl Mul<f64> for Vec3 {
+    type Output = Self;
+
+    fn mul(self, rhs: f64) -> Self::Output {
+        Self(self.0 * rhs, self.1 * rhs, self.2 * rhs)
+    }
+}
+
+impl Mul<Vec3> for f64 {
+    type Output = Vec3;
+
+    fn mul(self, rhs: Vec3) -> Self::Output {
+        rhs * self
+    }
+}
+
+impl Div<f64> for Vec3 {
+    type Output = Vec3;
+
+    fn div(self, rhs: f64) -> Self::Output {
+        (1.0 / rhs) * self
+    }
+}
+
+pub fn dot(a: Vec3, b: Vec3) -> f64 {
+    a.0 * b.0 + a.1 * b.1 + a.2 * b.2
+}
+
+pub fn cross(a: Vec3, b: Vec3) -> Vec3 {
+    Vec3(
+        a.1 * b.2 - a.2 * b.1,
+        a.2 * b.0 - a.0 * b.2,
+        a.0 * b.1 - a.1 * b.0,
+    )
+}
+
+pub fn unit_vector(v: Vec3) -> Vec3 {
+    v / v.length()
+}
+
+pub type Point3 = Vec3;
+pub type Color = Vec3;
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn negate_vec3() {
+        let neg = -Vec3(1.0, 2.0, 3.0);
+        assert_eq!(neg.0, -1.0);
+        assert_eq!(neg.1, -2.0);
+        assert_eq!(neg.2, -3.0);
+    }
+}
