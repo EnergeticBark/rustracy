@@ -11,6 +11,10 @@ impl Ray {
         Self { origin, direction }
     }
 
+    pub fn origin(self) -> Point3 {
+        self.origin
+    }
+
     pub fn direction(self) -> Vec3 {
         self.direction
     }

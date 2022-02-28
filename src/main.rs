@@ -6,7 +6,19 @@ mod color;
 mod ray;
 mod vec3;
 
-fn ray_color(r: &Ray) -> Color {
+fn hit_sphere(center: Point3, radius: f64, r: Ray) -> bool {
+    let oc = r.origin() - center;
+    let a = vec3::dot(r.direction(), r.direction());
+    let b = 2.0 * vec3::dot(r.direction(), oc);
+    let c = vec3::dot(oc, oc) - radius * radius;
+    let discriminant = b * b - 4.0 * a * c;
+    discriminant > 0.0
+}
+
+fn ray_color(r: Ray) -> Color {
+    if hit_sphere(Point3::from(0.0, 0.0, -1.0), 0.5, r) {
+        return Color::from(1.0, 0.0, 0.0);
+    }
     let unit_direction = unit_vector(r.direction());
     let t = 0.5*(unit_direction.y() + 1.0);
     (1.0-t) * Color::from(1.0, 1.0, 1.0) + t * Color::from(0.5, 0.7, 1.0)
@@ -37,7 +49,7 @@ fn main() {
             let u = i as f64 / (IMAGE_WIDTH - 1) as f64;
             let v = j as f64 / (IMAGE_HEIGHT - 1) as f64;
             let r = Ray::from(origin, lower_left_corner + u * horizontal + v * vertical);
-            let pixel = ray_color(&r);
+            let pixel = ray_color(r);
             print!("{}", write_color(&pixel))
         }
     }
