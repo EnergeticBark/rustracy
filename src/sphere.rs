@@ -1,10 +1,19 @@
 use crate::hittable::*;
-use crate::Ray;
+use crate::{Point3, Ray};
 use crate::vec3;
 
 pub struct Sphere {
-    center: vec3::Point3,
+    center: Point3,
     radius: f64,
+}
+
+impl Sphere {
+    pub fn from(center: Point3, radius: f64) -> Self {
+        Self {
+            center,
+            radius
+        }
+    }
 }
 
 impl Hittable for Sphere {
