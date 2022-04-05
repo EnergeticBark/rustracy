@@ -8,7 +8,7 @@ pub fn ray_color(r: Ray, world: &HittableList, depth: u32) -> Color {
     }
 
     let mut rec = HitRecord::new();
-    if world.hit(r, 0.0, f64::INFINITY, &mut rec) {
+    if world.hit(r, 0.001, f64::INFINITY, &mut rec) {
         let target = rec.p + rec.normal + Point3::random_in_unit_sphere();
         return 0.5 * ray_color(Ray::from(rec.p, target - rec.p), world, depth - 1);
     }
