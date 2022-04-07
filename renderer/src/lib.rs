@@ -1,16 +1,18 @@
 use rand::{thread_rng, Rng};
 
 mod vec3;
-mod color;
+mod pixel;
 mod ray;
 mod hittable;
 mod hittable_list;
 mod sphere;
 mod camera;
+mod renderer;
 
 pub use vec3::*;
-pub use color::*;
+pub use pixel::*;
 pub use ray::Ray;
+pub use renderer::Renderer;
 pub use hittable::{Hittable, HitRecord};
 pub use hittable_list::HittableList;
 pub use sphere::Sphere;
