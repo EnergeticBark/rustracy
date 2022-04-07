@@ -23,12 +23,8 @@ pub struct Renderer {
     max_depth: u32,
 }
 
-impl Default for Renderer {
-    fn default() -> Self {
-        let aspect_ratio = 16.0 / 9.0;
-        let image_width = 400;
-        let image_height = (image_width as f64 / aspect_ratio) as u32;
-
+impl Renderer {
+    pub fn from(image_width: u32, image_height: u32) -> Renderer {
         Self {
             image_width,
             image_height,
@@ -36,9 +32,7 @@ impl Default for Renderer {
             max_depth: 50,
         }
     }
-}
 
-impl Renderer {
     pub fn draw(&self, world: &HittableList, cam: &Camera) -> Vec<Pixel> {
         let mut bitmap: Vec<Pixel> = Vec::new();
 

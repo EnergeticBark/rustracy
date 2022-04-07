@@ -3,19 +3,18 @@ use renderer::*;
 
 fn main() {
     // Image
-    const ASPECT_RATIO: f64 = 16.0 / 9.0;
     const IMAGE_WIDTH: u32 = 400;
-    const IMAGE_HEIGHT: u32 = (IMAGE_WIDTH as f64 / ASPECT_RATIO) as u32;
+    const IMAGE_HEIGHT: u32 = 225;
 
     let mut world = HittableList::new();
     world.add(Rc::new(Sphere::from(Point3::from(0.0,0.0,-1.0), 0.5)));
     world.add(Rc::new(Sphere::from(Point3::from(0.0,-100.5,-1.0), 100.0)));
 
-    let cam = Camera::new();
+    let cam = Camera::from(IMAGE_WIDTH as f64 / IMAGE_HEIGHT as f64);
 
     print!("P3\n{IMAGE_WIDTH} {IMAGE_HEIGHT}\n255\n");
 
-    let renderer = Renderer::default();
+    let renderer = Renderer::from(IMAGE_WIDTH, IMAGE_HEIGHT);
     let bitmap = renderer.draw(&world, &cam);
 
     for p in bitmap {
