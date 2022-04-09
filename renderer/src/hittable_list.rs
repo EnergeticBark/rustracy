@@ -20,19 +20,17 @@ impl HittableList {
         self.objects.push(object);
     }
 
-    pub fn hit(&self, r: Ray, t_min: f64, t_max: f64, rec: &mut HitRecord) -> bool {
-        let mut temp_rec = HitRecord::new();
-        let mut hit_anything = false;
-        let mut closest_so_far = t_max;
+    pub fn hit(&self, r: Ray, t_min: f64, t_max: f64) -> Option<HitRecord> {
+        let mut closest_rec: Option<HitRecord> = None;
+        let mut max_distance = t_max;
 
         for object in &self.objects {
-            if object.hit(r, t_min, closest_so_far, &mut temp_rec) {
-                hit_anything = true;
-                closest_so_far = temp_rec.t;
-                *rec = temp_rec;
+            if let Some(rec) = object.hit(r, t_min, max_distance) {
+                max_distance = rec.t;
+                closest_rec = Some(rec);
             }
         }
 
-        hit_anything
+        closest_rec
     }
 }
