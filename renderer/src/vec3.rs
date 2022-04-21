@@ -51,6 +51,15 @@ impl Vec3 {
     fn length_squared(&self) -> f64 {
         self.0 * self.0 + self.1 * self.1 + self.2 * self.2
     }
+
+    pub fn near_zero(&self) -> bool {
+        let s = 1e-8;
+        self.0.abs() < s && self.1.abs() < s && self.2.abs() < s
+    }
+
+    pub fn reflect(&self, normal: Vec3) -> Self {
+        *self - 2.0 * dot(*self, normal) * normal
+    }
 }
 
 impl Neg for Vec3 {

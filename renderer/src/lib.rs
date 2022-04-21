@@ -8,6 +8,7 @@ mod hittable_list;
 mod sphere;
 mod camera;
 mod renderer;
+mod material;
 
 pub use vec3::*;
 pub use pixel::*;
@@ -17,6 +18,7 @@ pub use hittable::{Hittable, HitRecord};
 pub use hittable_list::HittableList;
 pub use sphere::Sphere;
 pub use camera::Camera;
+pub use material::{Lambertian, Metal};
 
 const PI: f64 = std::f64::consts::PI;
 

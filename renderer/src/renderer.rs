@@ -1,14 +1,16 @@
-use crate::{Camera, Color, HitRecord, HittableList, Pixel, Ray};
+use crate::{Camera, Color, HittableList, Pixel, Ray};
 use crate::{random_f64, vec3::*};
 
 pub fn ray_color(r: Ray, world: &HittableList, depth: u32) -> Color {
-    if depth <= 0 {
+    if depth == 0 {
         return Color::from(0.0, 0.0, 0.0);
     }
 
     if let Some(rec) = world.hit(r, 0.001, f64::INFINITY) {
-        let target = rec.p + rec.normal + Point3::random_unit_vector();
-        return 0.5 * ray_color(Ray::from(rec.p, target - rec.p), world, depth - 1);
+        return match rec.material.scatter(r, &rec) {
+            Some(res) => res.attenuation * ray_color(res.scattered, world, depth - 1),
+            None => Color::from(0.0, 0.0, 0.0)
+        };
     }
     let unit_direction = unit_vector(r.direction());
     let t = 0.5*(unit_direction.y() + 1.0);
