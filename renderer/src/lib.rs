@@ -18,7 +18,7 @@ pub use hittable::{Hittable, HitRecord};
 pub use hittable_list::HittableList;
 pub use sphere::Sphere;
 pub use camera::Camera;
-pub use material::{Lambertian, Metal};
+pub use material::{Lambertian, Metal, Dielectric};
 
 const PI: f64 = std::f64::consts::PI;
 

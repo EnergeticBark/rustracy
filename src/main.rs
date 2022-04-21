@@ -7,20 +7,23 @@ fn main() {
     const IMAGE_HEIGHT: u32 = 225;
 
     let material_ground = Rc::new(Lambertian::from(Color::from(0.8, 0.8, 0.0)));
-    let material_center = Rc::new(Lambertian::from(Color::from(0.7, 0.3, 0.3)));
-    let material_left = Rc::new(Metal::from(Color::from(0.8, 0.8, 0.8), 0.3));
-    let material_right = Rc::new(Metal::from(Color::from(0.8, 0.6, 0.2), 1.0));
+    let material_center = Rc::new(Lambertian::from(Color::from(0.1, 0.2, 0.5)));
+    let material_left = Rc::new(Dielectric::from(1.5));
+    let material_right = Rc::new(Metal::from(Color::from(0.8, 0.6, 0.2), 0.0));
 
     let ground = Rc::new(Sphere::from(Point3::from(0.0, -100.5, -1.0), 100.0, material_ground));
-    let center = Rc::new(Sphere::from(Point3::from(0.0,    0.0, -1.0), 0.5, material_center));
-    let left = Rc::new(Sphere::from(Point3::from(-1.0,    0.0, -1.0), 0.5, material_left));
-    let right = Rc::new(Sphere::from(Point3::from(1.0,    0.0, -1.0), 0.5, material_right));
+    let center = Rc::new(Sphere::from(Point3::from(0.0, 0.0, -1.0), 0.5, material_center));
+    let left = Rc::new(Sphere::from(Point3::from(-1.0, 0.0, -1.0), 0.5, material_left.clone()));
+    let left_hallow = Rc::new(Sphere::from(Point3::from(-1.0, 0.0, -1.0), -0.4, material_left));
+    let right = Rc::new(Sphere::from(Point3::from(1.0, 0.0, -1.0), 0.5, material_right));
 
     let mut world = HittableList::new();
     world.add(ground);
     world.add(center);
     world.add(left);
+    world.add(left_hallow);
     world.add(right);
+
 
     let cam = Camera::from(IMAGE_WIDTH as f64 / IMAGE_HEIGHT as f64);
 
