@@ -1,4 +1,4 @@
-use crate::{Color, HitRecord, Ray, unit_vector, Vec3, vec3::dot};
+use crate::{Color, HitRecord, Ray, unit_vector, Vec3, vec3};
 
 pub trait Material {
     fn scatter(&self, r_in: Ray, rec: &HitRecord) -> Option<ScatterResult>;
@@ -39,21 +39,24 @@ impl Material for Lambertian {
 
 pub struct Metal {
     albedo: Color,
+    fuzz: f64,
 }
 
 impl Metal {
-    pub fn from(albedo: Color) -> Self {
+    pub fn from(albedo: Color, fuzz: f64) -> Self {
         Self {
-            albedo
+            albedo,
+            fuzz,
         }
     }
 }
 
 impl Material for Metal {
     fn scatter(&self, r_in: Ray, rec: &HitRecord) -> Option<ScatterResult> {
-        let reflect_direction = unit_vector(r_in.direction()).reflect(rec.normal);
+        let reflect_direction = unit_vector(r_in.direction()).reflect(rec.normal)
+            + self.fuzz * Vec3::random_in_unit_sphere();
 
-        if dot(reflect_direction, rec.normal) > 0.0 {
+        if vec3::dot(reflect_direction, rec.normal) > 0.0 {
             Some(ScatterResult {
                 scattered: Ray::from(rec.p, reflect_direction),
                 attenuation: self.albedo,
