@@ -5,6 +5,7 @@ fn main() {
     // Image
     const IMAGE_WIDTH: u32 = 400;
     const IMAGE_HEIGHT: u32 = 225;
+    const ASPECT_RATIO: f64 = IMAGE_WIDTH as f64 / IMAGE_HEIGHT as f64;
 
     let material_ground = Rc::new(Lambertian::from(Color::from(0.8, 0.8, 0.0)));
     let material_center = Rc::new(Lambertian::from(Color::from(0.1, 0.2, 0.5)));
@@ -14,7 +15,7 @@ fn main() {
     let ground = Rc::new(Sphere::from(Point3::from(0.0, -100.5, -1.0), 100.0, material_ground));
     let center = Rc::new(Sphere::from(Point3::from(0.0, 0.0, -1.0), 0.5, material_center));
     let left = Rc::new(Sphere::from(Point3::from(-1.0, 0.0, -1.0), 0.5, material_left.clone()));
-    let left_hallow = Rc::new(Sphere::from(Point3::from(-1.0, 0.0, -1.0), -0.4, material_left));
+    let left_hallow = Rc::new(Sphere::from(Point3::from(-1.0, 0.0, -1.0), -0.45, material_left));
     let right = Rc::new(Sphere::from(Point3::from(1.0, 0.0, -1.0), 0.5, material_right));
 
     let mut world = HittableList::new();
@@ -24,8 +25,7 @@ fn main() {
     world.add(left_hallow);
     world.add(right);
 
-
-    let cam = Camera::from(IMAGE_WIDTH as f64 / IMAGE_HEIGHT as f64);
+    let cam = Camera::from(Point3::from(-2.0,2.0,1.0), Point3::from(0.0,0.0,-1.0), Point3::from(0.0,1.0,0.0), 90.0, ASPECT_RATIO);
 
     print!("P3\n{IMAGE_WIDTH} {IMAGE_HEIGHT}\n255\n");
 
