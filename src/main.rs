@@ -25,7 +25,13 @@ fn main() {
     world.add(left_hallow);
     world.add(right);
 
-    let cam = Camera::from(Point3::from(-2.0,2.0,1.0), Point3::from(0.0,0.0,-1.0), Point3::from(0.0,1.0,0.0), 90.0, ASPECT_RATIO);
+    let look_from = Point3::from(3.0, 3.0, 2.0);
+    let look_at = Point3::from(0.0, 0.0, -1.0);
+    let vup = Vec3::from(0.0, 1.0, 0.0);
+    let dist_to_focus = (look_from - look_at).length();
+    let aperture = 2.0;
+
+    let cam = Camera::from(look_from, look_at, vup, 20.0, ASPECT_RATIO, aperture, dist_to_focus);
 
     print!("P3\n{IMAGE_WIDTH} {IMAGE_HEIGHT}\n255\n");
 
