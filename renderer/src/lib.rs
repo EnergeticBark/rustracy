@@ -9,6 +9,7 @@ mod sphere;
 mod camera;
 mod renderer;
 mod material;
+mod aabb;
 
 pub use vec3::*;
 pub use pixel::*;
