@@ -1,6 +1,6 @@
 use crate::{Point3, Ray};
 
-struct Aabb {
+pub struct Aabb {
     minimum: Point3,
     maximum: Point3,
 }
@@ -12,6 +12,13 @@ impl Aabb {
 
     fn max(&self) -> Point3 {
         self.maximum
+    }
+
+    pub fn from(minimum: Point3, maximum: Point3) -> Self {
+        Self {
+            minimum,
+            maximum
+        }
     }
 
     fn hit(&self, r: Ray, mut t_min: f64, mut t_max: f64) -> bool {
@@ -50,5 +57,20 @@ impl Aabb {
         }
 
         true
+    }
+}
+
+pub fn surrounding_box(box_0: Aabb, box_1: Aabb) -> Aabb {
+    Aabb {
+        minimum: Point3::from(
+            box_0.minimum.x().min(box_1.minimum.x()),
+            box_0.minimum.y().min(box_1.minimum.y()),
+            box_0.minimum.z().min(box_1.minimum.z()),
+        ),
+        maximum: Point3::from(
+            box_0.maximum.x().max(box_1.maximum.x()),
+            box_0.maximum.y().max(box_1.maximum.y()),
+            box_0.maximum.z().max(box_1.maximum.z()),
+        ),
     }
 }

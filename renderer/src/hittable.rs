@@ -2,6 +2,7 @@ use std::rc::Rc;
 use crate::material::Material;
 use crate::vec3::*;
 use crate::ray::*;
+use crate::aabb::*;
 
 pub struct HitRecord {
     pub p: Point3,
@@ -37,4 +38,5 @@ impl HitRecord {
 
 pub trait Hittable {
     fn hit(&self, r: Ray, t_min: f64, t_max: f64) -> Option<HitRecord>;
+    fn bounding_box(&self) -> Option<Aabb>;
 }

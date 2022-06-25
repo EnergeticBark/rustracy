@@ -1,6 +1,7 @@
 use std::rc::Rc;
 use crate::hittable::*;
 use crate::{Point3, Ray};
+use crate::aabb::Aabb;
 use crate::material::Material;
 use crate::vec3;
 
@@ -49,5 +50,12 @@ impl Hittable for Sphere {
         );
 
         Some(rec)
+    }
+
+    fn bounding_box(&self) -> Option<Aabb> {
+        Some(Aabb::from(
+            self.center - Point3::from(self.radius, self.radius, self.radius),
+            self.center - Point3::from(self.radius, self.radius, self.radius),
+        ))
     }
 }

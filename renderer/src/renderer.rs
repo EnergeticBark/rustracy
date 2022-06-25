@@ -1,4 +1,4 @@
-use crate::{Camera, Color, HittableList, Pixel, Ray};
+use crate::{Camera, Color, HittableList, Hittable, Pixel, Ray};
 use crate::{random_f64, vec3::*};
 
 pub fn ray_color(r: Ray, world: &HittableList, depth: u32) -> Color {
