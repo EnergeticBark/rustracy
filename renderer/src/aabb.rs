@@ -1,5 +1,6 @@
 use crate::{Point3, Ray};
 
+#[derive(Clone, Copy)]
 pub struct Aabb {
     minimum: Point3,
     maximum: Point3,
@@ -21,7 +22,7 @@ impl Aabb {
         }
     }
 
-    fn hit(&self, r: Ray, mut t_min: f64, mut t_max: f64) -> bool {
+    pub fn hit(&self, r: Ray, mut t_min: f64, mut t_max: f64) -> bool {
         // The farthest t0 needs to be closer than the closest t1, otherwise we didn't hit the box.
         // Checking x, y, and z by hand instead of looping, because apparently you can't
         // dynamically index tuples...

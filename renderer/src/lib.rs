@@ -10,6 +10,7 @@ mod camera;
 mod renderer;
 mod material;
 mod aabb;
+mod bvh;
 
 pub use vec3::*;
 pub use pixel::*;
@@ -20,6 +21,7 @@ pub use hittable_list::HittableList;
 pub use sphere::Sphere;
 pub use camera::Camera;
 pub use material::{Lambertian, Metal, Dielectric};
+pub use aabb::Aabb;
 
 pub const PI: f64 = std::f64::consts::PI;
 
