@@ -15,7 +15,7 @@ impl Aabb {
         self.maximum
     }
 
-    pub fn from(minimum: Point3, maximum: Point3) -> Self {
+    pub fn new(minimum: Point3, maximum: Point3) -> Self {
         Self {
             minimum,
             maximum
@@ -63,12 +63,12 @@ impl Aabb {
 
 pub fn surrounding_box(box_0: Aabb, box_1: Aabb) -> Aabb {
     Aabb {
-        minimum: Point3::from(
+        minimum: Point3::new(
             box_0.minimum.x().min(box_1.minimum.x()),
             box_0.minimum.y().min(box_1.minimum.y()),
             box_0.minimum.z().min(box_1.minimum.z()),
         ),
-        maximum: Point3::from(
+        maximum: Point3::new(
             box_0.maximum.x().max(box_1.maximum.x()),
             box_0.maximum.y().max(box_1.maximum.y()),
             box_0.maximum.z().max(box_1.maximum.z()),

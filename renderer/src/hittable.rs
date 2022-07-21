@@ -13,7 +13,7 @@ pub struct HitRecord {
 }
 
 impl HitRecord {
-    pub fn from(r: Ray, outward_normal: Vec3, material: Rc<dyn Material>, t: f64) -> Self {
+    pub fn new(r: Ray, outward_normal: Vec3, material: Rc<dyn Material>, t: f64) -> Self {
         // point where ray intersected with object
         let p = r.at(t);
 

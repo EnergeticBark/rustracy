@@ -1,8 +1,9 @@
+use std::rc::Rc;
 use crate::{Hittable, Aabb, HitRecord};
 
 struct BvhNode {
-    left: Box<dyn Hittable>,
-    right: Box<dyn Hittable>,
+    left: Rc<dyn Hittable>,
+    right: Rc<dyn Hittable>,
     bounding_box: Aabb,
 }
 

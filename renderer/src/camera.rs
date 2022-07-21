@@ -12,7 +12,7 @@ pub struct Camera {
 }
 
 impl Camera {
-    pub fn from(look_from: Point3, look_at: Point3, vup: Vec3, v_fov: f64, aspect_ratio: f64, aperture: f64, focus_dist: f64) -> Self {
+    pub fn new(look_from: Point3, look_at: Point3, vup: Vec3, v_fov: f64, aspect_ratio: f64, aperture: f64, focus_dist: f64) -> Self {
         let theta = degrees_to_radians(v_fov);
         let h = (theta / 2.0).tan();
         let viewport_height: f64 = 2.0 * h;
@@ -42,7 +42,7 @@ impl Camera {
         let rd = self.lens_radius * Vec3::random_in_unit_disc();
         let offset = self.u * rd.x() + self.v * rd.y();
 
-        Ray::from(
+        Ray::new(
             self.origin + offset,
             self.lower_left_corner + s * self.horizontal + t * self.vertical - self.origin - offset
         )

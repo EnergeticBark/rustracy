@@ -14,7 +14,7 @@ pub struct Lambertian {
 }
 
 impl Lambertian {
-    pub fn from(albedo: Color) -> Self {
+    pub fn new(albedo: Color) -> Self {
         Self {
             albedo
         }
@@ -31,7 +31,7 @@ impl Material for Lambertian {
         }
 
         Some(ScatterResult {
-            scattered: Ray::from(rec.p, scatter_direction),
+            scattered: Ray::new(rec.p, scatter_direction),
             attenuation: self.albedo,
         })
     }
@@ -43,7 +43,7 @@ pub struct Metal {
 }
 
 impl Metal {
-    pub fn from(albedo: Color, fuzz: f64) -> Self {
+    pub fn new(albedo: Color, fuzz: f64) -> Self {
         Self {
             albedo,
             fuzz,
@@ -58,7 +58,7 @@ impl Material for Metal {
 
         if vec3::dot(reflect_direction, rec.normal) > 0.0 {
             Some(ScatterResult {
-                scattered: Ray::from(rec.p, reflect_direction),
+                scattered: Ray::new(rec.p, reflect_direction),
                 attenuation: self.albedo,
             })
         } else {
@@ -72,7 +72,7 @@ pub struct Dielectric {
 }
 
 impl Dielectric {
-    pub fn from(index_of_refraction: f64) -> Self {
+    pub fn new(index_of_refraction: f64) -> Self {
         Self {
             index_of_refraction
         }
@@ -105,8 +105,8 @@ impl Material for Dielectric {
         };
 
         Some(ScatterResult {
-            scattered: Ray::from(rec.p, direction),
-            attenuation: Color::from(1.0, 1.0, 1.0),
+            scattered: Ray::new(rec.p, direction),
+            attenuation: Color::new(1.0, 1.0, 1.0),
         })
     }
 }

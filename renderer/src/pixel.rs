@@ -4,7 +4,7 @@ use crate::clamp;
 pub struct Pixel(pub u8, pub u8, pub u8);
 
 impl Pixel {
-    pub fn from(pixel_color: &Color, samples_per_pixel: u32) -> Self {
+    pub fn new(pixel_color: &Color, samples_per_pixel: u32) -> Self {
         let scale = 1.0 / samples_per_pixel as f64;
         let pixel_color = *pixel_color * scale;
 

@@ -12,7 +12,7 @@ pub struct Sphere {
 }
 
 impl Sphere {
-    pub fn from(center: Point3, radius: f64, material: Rc<dyn Material>) -> Self {
+    pub fn new(center: Point3, radius: f64, material: Rc<dyn Material>) -> Self {
         Self {
             center,
             radius,
@@ -42,7 +42,7 @@ impl Hittable for Sphere {
             }
         }
 
-        let rec = HitRecord::from(
+        let rec = HitRecord::new(
             r,
             (r.at(root) - self.center) / self.radius,
             Rc::clone(&self.material),
@@ -53,9 +53,9 @@ impl Hittable for Sphere {
     }
 
     fn bounding_box(&self) -> Option<Aabb> {
-        Some(Aabb::from(
-            self.center - Point3::from(self.radius, self.radius, self.radius),
-            self.center - Point3::from(self.radius, self.radius, self.radius),
+        Some(Aabb::new(
+            self.center - Point3::new(self.radius, self.radius, self.radius),
+            self.center - Point3::new(self.radius, self.radius, self.radius),
         ))
     }
 }

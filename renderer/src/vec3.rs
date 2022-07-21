@@ -5,11 +5,7 @@ use crate::{random_f64, random_f64_range};
 pub struct Vec3(f64, f64, f64);
 
 impl Vec3 {
-    pub fn new() -> Self {
-        Self(0.0, 0.0, 0.0)
-    }
-
-    pub fn from(x: f64, y: f64, z: f64) -> Self {
+    pub fn new(x: f64, y: f64, z: f64) -> Self {
         Self(x, y, z)
     }
 
@@ -36,7 +32,7 @@ impl Vec3 {
 
     pub fn random_in_unit_disc() -> Self {
         loop {
-            let point = Vec3::from(random_f64_range(-1.0, 1.0), random_f64_range(-1.0, 1.0), 0.0);
+            let point = Vec3::new(random_f64_range(-1.0, 1.0), random_f64_range(-1.0, 1.0), 0.0);
             if point.length_squared() < 1.0 {
                 return point
             }
