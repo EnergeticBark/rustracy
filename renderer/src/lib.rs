@@ -1,4 +1,4 @@
-use rand::{thread_rng, Rng};
+use rand::{thread_rng, Rng, distributions::uniform::{SampleRange, SampleUniform}};
 
 mod vec3;
 mod pixel;
@@ -33,8 +33,11 @@ pub fn random_f64() -> f64 {
     thread_rng().gen()
 }
 
-pub fn random_f64_range(min: f64, max: f64) -> f64 {
-    thread_rng().gen_range(min..max)
+pub fn random_in_range<T, R>(range: R) -> T
+    where T: SampleUniform,
+    R: SampleRange<T>
+{
+    thread_rng().gen_range(range)
 }
 
 pub fn clamp(x: f64, min: f64, max: f64) -> f64 {

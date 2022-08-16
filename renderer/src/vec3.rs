@@ -1,5 +1,5 @@
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Neg, Sub};
-use crate::{random_f64, random_f64_range};
+use crate::{random_f64, random_in_range};
 
 #[derive(Debug, Copy, Clone)]
 pub struct Vec3(f64, f64, f64);
@@ -14,7 +14,7 @@ impl Vec3 {
     }
 
     pub fn random_range(min: f64, max :f64) -> Self {
-        Self(random_f64_range(min, max), random_f64_range(min, max), random_f64_range(min, max))
+        Self(random_in_range(min..=max), random_in_range(min..=max), random_in_range(min..=max))
     }
 
     pub fn random_in_unit_sphere() -> Self {
@@ -32,7 +32,7 @@ impl Vec3 {
 
     pub fn random_in_unit_disc() -> Self {
         loop {
-            let point = Vec3::new(random_f64_range(-1.0, 1.0), random_f64_range(-1.0, 1.0), 0.0);
+            let point = Vec3::new(random_in_range(-1.0..=1.0), random_in_range(-1.0..=1.0), 0.0);
             if point.length_squared() < 1.0 {
                 return point
             }
