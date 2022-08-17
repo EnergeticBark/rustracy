@@ -22,6 +22,7 @@ pub use sphere::Sphere;
 pub use camera::Camera;
 pub use material::{Lambertian, Metal, Dielectric};
 pub use aabb::Aabb;
+pub use bvh::BvhNode;
 
 pub const PI: f64 = std::f64::consts::PI;
 

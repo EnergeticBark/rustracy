@@ -1,16 +1,16 @@
 use std::{rc::Rc, cmp::Ordering};
 use crate::{Hittable, Aabb, HitRecord, random_in_range, aabb::surrounding_box};
 
-struct BvhNode {
+pub struct BvhNode {
     left: Rc<dyn Hittable>,
     right: Rc<dyn Hittable>,
     bounding_box: Aabb,
 }
 
 impl BvhNode {
-    fn new(src_objects: &Vec<Rc<dyn Hittable>>, start: usize, end: usize) -> Self {
-        let mut left: Rc<dyn Hittable>;
-        let mut right: Rc<dyn Hittable>;
+    pub fn new(objects: &mut [Rc<dyn Hittable>]) -> Self {
+        let left: Rc<dyn Hittable>;
+        let right: Rc<dyn Hittable>;
 
         let axis = random_in_range(0..=2);
 
@@ -21,16 +21,14 @@ impl BvhNode {
             _ => unreachable!(),
         };
 
-        let object_span = end - start;
-
-        match object_span {
+        match objects.len() {
             1 => {
-                left = src_objects[start].clone();
-                right = src_objects[start].clone();
+                left = objects[0].clone();
+                right = objects[0].clone();
             },
             2 => {
-                let a = src_objects[start].clone();
-                let b = src_objects[start+1].clone();
+                let a = objects[0].clone();
+                let b = objects[1].clone();
                 if comparator(&a, &b) == Ordering::Less {
                     left = a;
                     right = b;
@@ -40,15 +38,12 @@ impl BvhNode {
                 }
             },
             _ => {
-                let mut sorted_objects: Vec<Rc<dyn Hittable>> =(src_objects[start..end].iter()
-                    .cloned())
-                    .collect();
-                sorted_objects.sort_by(|a, b| comparator(a, b));
+                objects.sort_by(|a, b| comparator(a, b));
 
-                let mid = object_span/2;
+                let mid = objects.len()/2;
 
-                left = Rc::new(BvhNode::new(&sorted_objects, start, mid));
-                right = Rc::new(BvhNode::new(&sorted_objects, mid, end));
+                left = Rc::new(BvhNode::new(&mut objects[..mid]));
+                right = Rc::new(BvhNode::new(&mut objects[mid..]));
             }
         }
 
