@@ -25,6 +25,11 @@ fn main() {
     world.add(left_hallow);
     world.add(right);
 
+    let tree = Rc::new(BvhNode::new(&mut world.objects));
+
+    world.clear();
+    world.add(tree);
+
     let look_from = Point3::new(3.0, 3.0, 2.0);
     let look_at = Point3::new(0.0, 0.0, -1.0);
     let vup = Vec3::new(0.0, 1.0, 0.0);
