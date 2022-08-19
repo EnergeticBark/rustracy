@@ -53,9 +53,16 @@ impl Hittable for Sphere {
     }
 
     fn bounding_box(&self) -> Option<Aabb> {
-        Some(Aabb::new(
+        Some(if self.radius.is_sign_positive() {
+            Aabb::new(
             self.center - Point3::new(self.radius, self.radius, self.radius),
             self.center + Point3::new(self.radius, self.radius, self.radius),
-        ))
+        )
+    } else {
+        Aabb::new(
+            self.center + Point3::new(self.radius, self.radius, self.radius),
+            self.center - Point3::new(self.radius, self.radius, self.radius),
+        )
+    })
     }
 }

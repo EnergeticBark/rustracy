@@ -15,7 +15,7 @@ mod bvh;
 pub use vec3::*;
 pub use pixel::*;
 pub use ray::Ray;
-pub use renderer::Renderer;
+pub use crate::renderer::Renderer;
 pub use hittable::{Hittable, HitRecord};
 pub use hittable_list::HittableList;
 pub use sphere::Sphere;

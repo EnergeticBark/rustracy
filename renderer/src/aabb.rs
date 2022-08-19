@@ -75,3 +75,28 @@ pub fn surrounding_box(box_0: Aabb, box_1: Aabb) -> Aabb {
         ),
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::{Ray, Point3, Vec3, unit_vector, Aabb};
+
+    #[test]
+    fn hit_aabb() {
+        let r_origin = Point3::new(0.0, 0.0, 0.0);
+        let r_direction = unit_vector(Vec3::new(1.0, 1.0, 1.0));
+        let r = Ray::new(r_origin, r_direction);
+
+        let b = Aabb::new(Point3::new(0.0, 0.0, 0.0), Vec3::new(1.0, 1.0, 1.0));
+        assert!(b.hit(r, 0.001, f64::INFINITY));
+    }
+
+    #[test]
+    fn miss_aabb() {
+        let r_origin = Point3::new(0.0, 0.0, 0.0);
+        let r_direction = unit_vector(Vec3::new(1.0, 1.0, 1.0));
+        let r = Ray::new(r_origin, r_direction);
+
+        let b = Aabb::new(Point3::new(1.0, 4.0, 1.0), Vec3::new(2.0, 5.0, 2.0));
+        assert!(!b.hit(r, 0.001, f64::INFINITY));
+    }
+}
